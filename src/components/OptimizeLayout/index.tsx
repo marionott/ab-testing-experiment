@@ -15,34 +15,32 @@ function gaHandler() {
   dataLayer.push(arguments)
 }
 
-const OptimizeLayout: FC<LayoutProps> = ({ children, ...props }) => {
+const OptimizeLayout: FC<Partial<LayoutProps>> = ({ children, ...props }) => {
   const ga = typeof window === 'undefined' ? throwIfSSR : gaHandler
-
+  console.log(process.env)
   return (
-    <Layout {...props}>
-      <Page>
-        <Script
-          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_TRACKING_ID}`}
-          onLoad={() => {
+    <Page>
+      <Script
+        src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_TRACKING_ID}`}
+        onLoad={() => {
+          //@ts-ignore
+          window.dataLayer = window.dataLayer || []
+          function gtag() {
             //@ts-ignore
-            window.dataLayer = window.dataLayer || []
-            function gtag() {
-              //@ts-ignore
-              dataLayer.push(arguments)
-            }
+            dataLayer.push(arguments)
+          }
 
-            //@ts-ignore
-            gtag('js', new Date())
-            //@ts-ignore
-            gtag('config', process.env.NEXT_PUBLIC_GOOGLE_TRACKING_ID)
-          }}
-        />
-        <Script
-          src={`https://www.googleoptimize.com/optimize.js?id=${process.env.NEXT_PUBLIC_OPTIMIZE_CONTAINER_ID}`}
-        />
-        <GoogleAnalyticsProvider value={ga}>{children}</GoogleAnalyticsProvider>
-      </Page>
-    </Layout>
+          //@ts-ignore
+          gtag('js', new Date())
+          //@ts-ignore
+          gtag('config', process.env.NEXT_PUBLIC_GOOGLE_TRACKING_ID)
+        }}
+      />
+      <Script
+        src={`https://www.googleoptimize.com/optimize.js?id=${process.env.NEXT_PUBLIC_OPTIMIZE_CONTAINER_ID}`}
+      />
+      <GoogleAnalyticsProvider value={ga}>{children}</GoogleAnalyticsProvider>
+    </Page>
   )
 }
 
