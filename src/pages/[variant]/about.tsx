@@ -1,6 +1,5 @@
 import { Text } from '@vercel/examples-ui'
 import Cookies from 'js-cookie'
-import { GetStaticPropsContext } from 'next'
 import { useEffect } from 'react'
 import experiments from '../../../config/optimize.json'
 import OptimizeLayout from '../../components/GoogleOptimizeLayout'

@@ -13,6 +13,7 @@ export function middleware(req: NextRequest) {
   if (!cookie) {
     let n = Math.random() * 100
     const experiment = getCurrentExperiment(experiments[0].name)
+
     if (!experiment) return
 
     const variant =
@@ -33,15 +34,13 @@ export function middleware(req: NextRequest) {
   if (variantId !== '0') {
     url.pathname = url.pathname.replace('/', `/${cookie}/`)
   }
-  console.log({ url })
-  // console.log({ variantId, url })
 
   const res = NextResponse.rewrite(url)
 
   // Add the cookie if it's not there
-  // if (!req.cookies.has(COOKIE_NAME)) {
-  //   res.cookies.set(COOKIE_NAME, cookie)
-  // }
+  if (!req.cookies.has(COOKIE_NAME)) {
+    res.cookies.set(COOKIE_NAME, cookie)
+  }
 
   return res
 }
