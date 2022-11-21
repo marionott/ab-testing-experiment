@@ -1,4 +1,4 @@
-import { Text } from '@vercel/examples-ui'
+import { Button, Text } from '@vercel/examples-ui'
 import Cookies from 'js-cookie'
 import { useEffect } from 'react'
 import experiments from '../../../config/optimize.json'
@@ -20,6 +20,11 @@ export default function About({ optimize }: { optimize: OptimizeProps }) {
   const { experiment, variant } = optimize ?? {}
 
   const ga = useGA()
+
+  const removeCookie = () => {
+    Cookies.remove(COOKIE_NAME)
+    window.location.reload()
+  }
 
   useEffect(() => {
     const cookie = Cookies.get(COOKIE_NAME)
@@ -46,6 +51,9 @@ export default function About({ optimize }: { optimize: OptimizeProps }) {
       <Text className='mb-4'>
         Click the button below to register an event with GA for this variant:
       </Text>
+      <Button variant='secondary' onClick={removeCookie}>
+        Remove cookie & reload
+      </Button>
     </>
   )
 }
