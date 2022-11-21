@@ -21,6 +21,10 @@ export default function Document() {
               gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_TRACKING_ID}');`
           }}
         />
+        <script
+          async
+          src={`https://www.googleoptimize.com/optimize.js?id=${process.env.NEXT_PUBLIC_OPTIMIZE_CONTAINER_ID}`}
+        />
       </Head>
       <body>
         <noscript
