@@ -6,17 +6,12 @@
       {
         "name": "original",
         "id": 0,
-        "weight": 33.3333
+        "weight": 50
       },
       {
-        "name": "Variant 1",
+        "name": "variant_1",
         "id": 1,
-        "weight": 33.3333
-      },
-      {
-        "name": "Variant 2",
-        "id": 2,
-        "weight": 33.3333
+        "weight": 50
       }
     ]
   }

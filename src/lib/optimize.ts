@@ -1,11 +1,18 @@
 import config from '../../config/optimize.json'
 
-/**
- * Returns the experiment to use, the overall flow is:
- * - You created an experiment in Google Optimize
- * - Then created the pages that will match that experiment, in this case pages/[variant]
- * - Start experimenting and then make decisions without having changed the original pages
- */
-export function getCurrentExperiment() {
-  return config.find((exp) => exp.name === 'A/B testing experiment')
+export type ExperimentVariant = {
+  name: string
+  id: number
+  weight: number
+}
+
+export type Experiment = {
+  name: string
+  id: string
+  variants: ExperimentVariant[]
+}
+
+export function getCurrentExperiment(name: string): Experiment | null {
+  const experiments: Experiment[] = config
+  return experiments?.find((exp) => exp.name === name) ?? null
 }

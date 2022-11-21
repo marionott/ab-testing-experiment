@@ -21,32 +21,15 @@ export default function Document() {
               gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_TRACKING_ID}');`
           }}
         />
-        <script
-          async
-          src={`https://www.googleoptimize.com/optimize.js?id=${process.env.NEXT_PUBLIC_OPTIMIZE_CONTAINER_ID}`}
-        />
-        {/* <Script
-          async
-          onLoad={() => {
-            console.log('SCRIPT LOADING!!!')
-            //@ts-ignore
-            window.dataLayer = window.dataLayer || []
-            function gtag() {
-              //@ts-ignore
-              dataLayer.push(arguments)
-            }
-
-            //@ts-ignore
-            gtag('js', new Date())
-            //@ts-ignore
-            gtag('config', process.env.NEXT_PUBLIC_GOOGLE_TRACKING_ID)
-          }}
-        />
-        <Script
-          src={`https://www.googleoptimize.com/optimize.js?id=${process.env.NEXT_PUBLIC_OPTIMIZE_CONTAINER_ID}`}
-        /> */}
       </Head>
       <body>
+        <noscript
+          dangerouslySetInnerHTML={{
+            __html: `
+                <iframe src="https://www.googletagmanager.com/ns.html?id=${process.env.NEXT_PUBLIC_GOOGLE_TRACKING_ID}" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+              `
+          }}
+        />
         <Main />
         <NextScript />
       </body>
