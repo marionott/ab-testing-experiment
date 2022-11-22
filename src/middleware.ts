@@ -4,7 +4,7 @@ import { getCurrentExperiment } from './lib/optimize'
 import experiments from '../config/optimize.json'
 
 export const config = {
-  matcher: ['/marketing', '/about']
+  matcher: ['/about']
 }
 
 export function middleware(req: NextRequest) {

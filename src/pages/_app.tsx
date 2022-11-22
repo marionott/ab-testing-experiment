@@ -1,24 +1,23 @@
 import type { AppProps } from 'next/app'
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
+import Tracking from '~/components/Tracking'
+import { TRACKING_EVENTS } from '~/lib/constants'
+import TrackerProvider, { useTracker } from '~/providers/TrackerProvider'
 import '../styles/globals.css'
-import { GoogleAnalyticsProvider } from '../providers/GoogleAnalyticsProvider'
-
-function throwIfSSR() {
-  throw new Error('Using GA during SSR is not allowed')
-}
-
-function gaHandler() {
-  const dataLayer = ((window as any).dataLayer =
-    (window as any).dataLayer || [])
-
-  dataLayer.push(arguments)
-}
 
 export default function App({ Component, pageProps }: AppProps) {
-  const ga = typeof window === 'undefined' ? throwIfSSR : gaHandler
+  const { asPath } = useRouter()
+  const tracker = useTracker()
+
+  useEffect(() => {
+    tracker.emit(TRACKING_EVENTS.PAGE_VIEW, asPath)
+  }, [])
 
   return (
-    <GoogleAnalyticsProvider value={ga}>
+    <TrackerProvider>
       <Component {...pageProps} />
-    </GoogleAnalyticsProvider>
+      <Tracking key='tracking' />
+    </TrackerProvider>
   )
 }

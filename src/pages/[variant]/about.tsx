@@ -1,15 +1,15 @@
 import { Button, Text } from '@vercel/examples-ui'
 import Cookies from 'js-cookie'
 import { useEffect } from 'react'
+import { useTracker } from '~/providers/TrackerProvider'
 import experiments from '../../../config/optimize.json'
 import OptimizeLayout from '../../components/GoogleOptimizeLayout'
-import { COOKIE_NAME } from '../../lib/constants'
+import { COOKIE_NAME, TRACKING_EVENTS } from '../../lib/constants'
 import {
   Experiment,
   ExperimentVariant,
   getCurrentExperiment
 } from '../../lib/optimize'
-import { useGA } from '../../providers/GoogleAnalyticsProvider'
 
 interface OptimizeProps {
   experiment: Experiment
@@ -18,26 +18,35 @@ interface OptimizeProps {
 
 export default function About({ optimize }: { optimize: OptimizeProps }) {
   const { experiment, variant } = optimize ?? {}
-
-  const ga = useGA()
+  const tracker = useTracker()
 
   const removeCookie = () => {
     Cookies.remove(COOKIE_NAME)
     window.location.reload()
   }
 
-  useEffect(() => {
-    const cookie = Cookies.get(COOKIE_NAME)
-    if (ga && cookie) {
-      ga('set', 'exp', cookie)
-    }
+  // console.log({
+  //   experiment_id: experiment?.id,
+  //   variant_id: variant?.id,
+  //   send_to: 'GA_MEASUREMENT_ID'
+  // })
 
-    ga('event', 'experiment_impression', {
-      experiment_id: experiment?.id,
-      variant_id: variant?.id,
-      send_to: 'GA_MEASUREMENT_ID'
+  useEffect(() => {
+    //const cookie = Cookies.get(COOKIE_NAME)
+    tracker.emit(TRACKING_EVENTS.EXPERIMENT_IMPRESSION, {
+      id: experiment?.id,
+      variantId: variant?.id
     })
-  }, [ga])
+    // if (ga && cookie) {
+    //   ga('set', 'exp', cookie)
+    // }
+
+    // ga('event', 'experiment_impression', {
+    //   experiment_id: experiment?.id,
+    //   variant_id: variant?.id,
+    //   send_to: 'GA_MEASUREMENT_ID'
+    // })
+  }, [])
 
   return (
     <>
