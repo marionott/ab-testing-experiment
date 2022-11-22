@@ -32,6 +32,7 @@ export default function About({ optimize }: { optimize: OptimizeProps }) {
   // })
 
   useEffect(() => {
+    console.log('EMIT EVENT')
     //const cookie = Cookies.get(COOKIE_NAME)
     tracker.emit(TRACKING_EVENTS.EXPERIMENT_IMPRESSION, {
       id: experiment?.id,

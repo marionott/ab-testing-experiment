@@ -36,20 +36,20 @@ export default function useGTMTracking() {
   const pushToDataLayer = (event: any) => {
     // Uncomment to debug
     // console.log(event)
-    window.dataLayer.push(event)
+    window?.dataLayer?.push(event)
   }
 
   const eventReducer = (event: string, eventPayload: any) => {
     switch (event) {
       case TRACKING_EVENTS.EXPERIMENT_IMPRESSION:
-        console.log('EXPERIMENT IMPRESSION')
-        pushToDataLayer({
-          event: 'optimize.callback',
-          name: experiments[0].id,
-          callback: (value) => {
-            console.log({ value })
-          }
-        })
+        // console.log('EXPERIMENT IMPRESSION')
+        // pushToDataLayer({
+        //   event: 'optimize.callback',
+        //   name: experiments[0].id,
+        //   callback: (value) => {
+        //     console.log({ value })
+        //   }
+        // })
 
         pushToDataLayer({
           event: TRACKING_EVENTS.EXPERIMENT_IMPRESSION,
