@@ -2,6 +2,9 @@
   {
     "name": "A/B testing experiment",
     "id": "7Y4gPq21RUaTAsh9Uix3pw",
+    "matchers": [
+      "/about"
+    ],
     "variants": [
       {
         "name": "original",

@@ -1,6 +1,4 @@
-import { Html, Head, Main, NextScript } from 'next/document'
-
-import Script from 'next/script'
+import { Head, Html, Main, NextScript } from 'next/document'
 
 export default function Document() {
   return (
@@ -10,8 +8,7 @@ export default function Document() {
           async
           src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_TRACKING_ID}`}
         /> */}
-        <Script
-          id='init-gtm'
+        <script
           dangerouslySetInnerHTML={{
             __html: `
                 (function(w, l) {
@@ -24,8 +21,7 @@ export default function Document() {
               `
           }}
         />
-        <Script
-          id='gtm'
+        <script
           dangerouslySetInnerHTML={{
             __html: `
               (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -36,7 +32,7 @@ export default function Document() {
             `
           }}
         />
-        <Script
+        <script
           async
           src={`https://www.googleoptimize.com/optimize.js?id=${process.env.NEXT_PUBLIC_OPTIMIZE_CONTAINER_ID}`}
         />

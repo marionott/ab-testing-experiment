@@ -1,23 +1,30 @@
 import type { AppProps } from 'next/app'
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
+import React from 'react'
+import Page from '~/components/Page'
 import Tracking from '~/components/Tracking'
-import { TRACKING_EVENTS } from '~/lib/constants'
-import TrackerProvider, { useTracker } from '~/providers/TrackerProvider'
+import useGoogleOptimizeExperiments from '~/hooks/useGoogleOptimizeExperiments'
+import AppProviders from '~/providers/AppProviders'
 import '../styles/globals.css'
 
 export default function App({ Component, pageProps }: AppProps) {
-  const { asPath } = useRouter()
-  const tracker = useTracker()
+  const { asPath, isFallback } = useRouter()
+  const key = asPath.split('?')?.[0]
 
-  useEffect(() => {
-    tracker.emit(TRACKING_EVENTS.PAGE_VIEW, asPath)
-  }, [])
+  useGoogleOptimizeExperiments()
 
   return (
-    <TrackerProvider>
-      <Component {...pageProps} />
-      <Tracking key='tracking' />
-    </TrackerProvider>
+    <React.StrictMode>
+      <AppProviders>
+        {isFallback ? (
+          <div>loading</div>
+        ) : (
+          <Page key={key} {...pageProps}>
+            <Component {...pageProps} />
+          </Page>
+        )}
+        <Tracking key='tracking' />
+      </AppProviders>
+    </React.StrictMode>
   )
 }

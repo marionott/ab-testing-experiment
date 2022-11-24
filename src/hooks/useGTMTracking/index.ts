@@ -42,15 +42,6 @@ export default function useGTMTracking() {
   const eventReducer = (event: string, eventPayload: any) => {
     switch (event) {
       case TRACKING_EVENTS.EXPERIMENT_IMPRESSION:
-        // console.log('EXPERIMENT IMPRESSION')
-        // pushToDataLayer({
-        //   event: 'optimize.callback',
-        //   name: experiments[0].id,
-        //   callback: (value) => {
-        //     console.log({ value })
-        //   }
-        // })
-
         pushToDataLayer({
           event: TRACKING_EVENTS.EXPERIMENT_IMPRESSION,
           experiment_id: eventPayload?.id,
@@ -59,19 +50,6 @@ export default function useGTMTracking() {
         })
         break
       case TRACKING_EVENTS.PAGE_VIEW:
-        // const intervalId = setInterval(() => {
-        //   console.log('interval')
-        //   //@ts-ignore
-        //   if (window?.google_optimize !== undefined) {
-        //     // Set the variant to the state.
-        //     console.log(
-        //       //@ts-ignore
-        //       window?.google_optimize?.get?.(experiments[0].id)
-        //     )
-        //     clearInterval(intervalId)
-        //   }
-        // }, 100)
-
         pushToDataLayer({
           event: 'optimize.activate'
         })

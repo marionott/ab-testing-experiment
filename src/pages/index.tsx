@@ -2,15 +2,18 @@ import { Button, Code, Link, List, Text } from '@vercel/examples-ui'
 import Cookies from 'js-cookie'
 import Head from 'next/head'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import { COOKIE_NAME } from '../lib/constants'
-import { useGA } from '../providers/GoogleAnalyticsProvider'
+import { useTracker } from '~/providers/TrackerProvider'
+import { COOKIE_NAME, TRACKING_EVENTS } from '../lib/constants'
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
-  const ga = useGA()
+  const { asPath } = useRouter()
+  const tracker = useTracker()
 
   const [cookie, setCookie] = useState<string | undefined>('')
+
   const removeCookie = () => {
     Cookies.remove(COOKIE_NAME)
     window.location.reload()
@@ -21,11 +24,8 @@ export default function Home() {
   }, [])
 
   useEffect(() => {
-    if (ga && cookie) {
-      ga?.('set', 'exp', cookie)
-    }
-    ga?.('send', 'pageview')
-  }, [ga, cookie])
+    tracker.emit(TRACKING_EVENTS.PAGE_VIEW, asPath)
+  }, [])
 
   return (
     <div className={styles.container}>
