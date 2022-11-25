@@ -7,6 +7,12 @@ import { useEffect, useState } from 'react'
 import { useTracker } from '~/providers/TrackerProvider'
 import { COOKIE_NAME, TRACKING_EVENTS } from '../lib/constants'
 import styles from '../styles/Home.module.css'
+import {
+  Experiment,
+  ExperimentVariant,
+  getCurrentExperiment
+} from '~/lib/optimize'
+import experiments from 'config/optimize.json'
 
 export default function Home() {
   const { asPath } = useRouter()
@@ -89,4 +95,21 @@ export default function Home() {
       </footer>
     </div>
   )
+}
+
+export async function getStaticProps({ params }) {
+  const experiment = getCurrentExperiment(experiments[0].name)
+  const [, variantId] = `${params?.variant}`?.split('.')
+
+  const defaultProps = {}
+
+  if (!experiment?.name && !experiment?.variants) return defaultProps
+
+  // Here you could fetch any data related only to the variant
+  return {
+    revalidate: 30000000000,
+    props: {
+      ...defaultProps
+    }
+  }
 }
