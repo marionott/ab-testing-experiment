@@ -46,7 +46,7 @@ export default function useGTMTracking() {
           event: TRACKING_EVENTS.EXPERIMENT_IMPRESSION,
           experiment_id: eventPayload?.id,
           variant_id: eventPayload?.variantId,
-          send_to: 'GA_MEASUREMENT_ID'
+          send_to: process.env.NEXT_PUBLIC_GOOGLE_TRACKING_ID
         })
         break
       case TRACKING_EVENTS.PAGE_VIEW:
