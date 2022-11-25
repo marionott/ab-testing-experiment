@@ -15,23 +15,23 @@ import {
 import experiments from 'config/optimize.json'
 
 export default function Home() {
-  const { asPath } = useRouter()
-  const tracker = useTracker()
+  // const { asPath } = useRouter()
+  // const tracker = useTracker()
 
-  const [cookie, setCookie] = useState<string | undefined>('')
+  // const [cookie, setCookie] = useState<string | undefined>('')
 
-  const removeCookie = () => {
-    Cookies.remove(COOKIE_NAME)
-    window.location.reload()
-  }
+  // const removeCookie = () => {
+  //   Cookies.remove(COOKIE_NAME)
+  //   window.location.reload()
+  // }
 
-  useEffect(() => {
-    setCookie(Cookies.get(COOKIE_NAME))
-  }, [])
+  // useEffect(() => {
+  //   setCookie(Cookies.get(COOKIE_NAME))
+  // }, [])
 
-  useEffect(() => {
-    tracker.emit(TRACKING_EVENTS.PAGE_VIEW, asPath)
-  }, [])
+  // useEffect(() => {
+  //   tracker.emit(TRACKING_EVENTS.PAGE_VIEW, asPath)
+  // }, [])
 
   return (
     <div className={styles.container}>
@@ -51,7 +51,7 @@ export default function Home() {
           <Code className={styles.code}>{'${experimentId}.${variantId}'}</Code>
           .
           <br />
-          You&apos;re assigned to: <b>{cookie}</b>
+          {/* You&apos;re assigned to: <b>{cookie}</b> */}
         </Text>
         <Text className='mb-4'>
           Based on a predefined experiment you&apos;ll be assigned one of 3
@@ -77,9 +77,9 @@ export default function Home() {
           Click the button below if you want to change the current variant (each
           variant has a 33% chance)
         </Text>
-        <Button variant='primary' onClick={removeCookie}>
+        {/* <Button variant='primary' onClick={removeCookie}>
           Remove cookie & reload
-        </Button>
+        </Button> */}
       </main>
 
       <footer className={styles.footer}>

@@ -11,7 +11,7 @@ export default function App({ Component, pageProps }: AppProps) {
   const { asPath, isFallback } = useRouter()
   const key = asPath.split('?')?.[0]
 
-  useGoogleOptimizeExperiments()
+  // useGoogleOptimizeExperiments()
 
   return (
     <React.StrictMode>
